@@ -1,6 +1,8 @@
 // Author: Frad Lee
 // Title: Random - 1
 
+// Verion 1
+
 #ifdef GL_ES
 precision mediump float;
 #endif

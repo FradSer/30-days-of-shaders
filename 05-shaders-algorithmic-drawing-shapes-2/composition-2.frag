@@ -1,5 +1,5 @@
 // Author: Frad Lee
-// Title: Composition 
+// Title: Composition - 2
 
 // Version 1
 
@@ -19,9 +19,9 @@ vec3 colorBlueBolck = vec3(0.0/255.0,96.0/255.0,154.0/255.0);
 
 void main(){
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
-    
+
     vec3 color = vec3(0.0);
-        
+
     // Red Block
     float redBlockX = step(0.6/8.0 ,st.x) - step(2.0/8.0,st.x);
     float redBlockY = step(5.2/8.0 ,st.y);
@@ -38,7 +38,7 @@ void main(){
     float blueBlockX = step(5.75/8.0 ,st.x) - step(7.4/8.0,st.x);
     float blueBlockY = 1.0 - step(0.6/8.0 ,st.y);
     float blueBlock = blueBlockX * blueBlockY;
-    vec3 pctBlueBlock = blueBlockX * blueBlockY * colorBlueBolck;      
+    vec3 pctBlueBlock = blueBlockX * blueBlockY * colorBlueBolck;
 
     // Background
     float backgroundX = 1.0 - step((0.6/8.0) ,st.x) +  step((7.4/8.0) ,st.x);
@@ -69,7 +69,9 @@ void main(){
     float vSLineY = step(5.2 / 8.0 ,st.y);
     float pctVSLine = vSLineX * vSLineY;
 
-    color = pctBackground + pctArtboard * ((pctVLLine - pctVSLine) * pctHLine) + pctRedBlock + pctBlueBlock + pctYellowBlock;
-    
+    color = pctBackground + pctArtboard *
+        ((pctVLLine - pctVSLine) * pctHLine) +
+        pctRedBlock + pctBlueBlock + pctYellowBlock;
+
     gl_FragColor = vec4(color,1.0);
 }

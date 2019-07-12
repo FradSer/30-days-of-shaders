@@ -1,5 +1,7 @@
 // Author: Frad Lee
-// Title: 1 - Shaders Getting Started
+// Title: Getting Started
+
+// Verion 1
 
 #ifdef GL_ES
 precision mediump float;

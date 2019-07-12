@@ -1,3 +1,8 @@
+// Author: Frad Lee
+// Title: William Turner Sunset
+
+// Verion 1
+
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -42,5 +47,3 @@ void main(){
 
     gl_FragColor = vec4((color_1 + color_2 + color_3) / 3.0, 1.0);
 }
-
-

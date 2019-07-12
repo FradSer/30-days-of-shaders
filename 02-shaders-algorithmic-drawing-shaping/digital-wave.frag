@@ -1,3 +1,8 @@
+// Author: Frad Lee
+// Title: Digital Wave
+
+// Verion 1
+
 #ifdef GL_ES
 precision mediump float;
 #endif

@@ -1,6 +1,8 @@
 // Author: Frad Lee
 // Title: Patterns - 1
 
+// Verion 1
+
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -10,7 +12,7 @@ uniform float u_time;
 
 vec2 brickTile(vec2 _st, float _zoom){
 	_st *= _zoom;
-    
+
     // Setup time
     float time1 = smoothstep(0.0,1.0,mod(sin(u_time),2.0));
     float time2 = smoothstep(0.0,1.0,mod(sin(u_time)-1.0,2.0));
@@ -20,7 +22,7 @@ vec2 brickTile(vec2 _st, float _zoom){
 	_st.y += 2.0 * step(1.0, mod(_st.x + 1.0,2.0)) * -time1;
 	_st.x += 2.0 * (step(1.0, mod(_st.y,2.0)) - 1.0) * time2;
 	_st.x += 2.0 * (step(1.0, mod(_st.y + 1.0,2.0)) - 1.0) * -time2;
-    
+
     return fract(_st);
 }
 
@@ -40,8 +42,7 @@ void main(void){
     st = brickTile(st,9.0);
 
     color = vec3(circle(st,0.5));
-    
+
 
     gl_FragColor = vec4(1.0 - color,1.0);
 }
-

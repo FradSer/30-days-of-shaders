@@ -1,6 +1,8 @@
 // Author: Frad Lee
 // Title: Rainbow Flag
 
+// Verion 1
+
 #ifdef GL_ES
 precision mediump float;
 #endif
@@ -39,9 +41,8 @@ void main() {
             ),colorF,stepX(5.0/7.0)
         ),colorG,stepX(6.0/7.0)
     );
-    
+
 	float x = st.y + sin(u_time);
 
     gl_FragColor = vec4(color * x  ,1.0);
 }
-
