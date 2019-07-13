@@ -1,7 +1,7 @@
 // Author: Frad Lee
 // Title: Composition - 2
 
-// Version 1
+// Version 3
 
 #ifdef GL_ES
 precision mediump float;
@@ -16,9 +16,24 @@ vec3 colorRedBolck = vec3(171.0/255.0,35.0/255.0,37.0/255.0);
 vec3 colorYellowBolck = vec3(252.0/255.0,196.0/255.0,51.0/255.0);
 vec3 colorBlueBolck = vec3(0.0/255.0,96.0/255.0,154.0/255.0);
 
+vec2 fixedRatio (in vec2 _st) {
+    _st = gl_FragCoord.xy / u_resolution.xy;
+    if (u_resolution.x > u_resolution.y) {
+        float edge = (u_resolution.x - u_resolution.y) / 2.0;
+        _st -= vec2(edge/ u_resolution.x, 0.0);
+        _st.x *= u_resolution.x / u_resolution.y;
+    } else if (u_resolution.x < u_resolution.y){
+        float edge = (u_resolution.y - u_resolution.x) / 2.0;
+        _st -= vec2(0.0,edge/ u_resolution.y);
+        _st.y *= u_resolution.y / u_resolution.x;
+    };
+    return _st;
+}
 
 void main(){
     vec2 st = gl_FragCoord.xy/u_resolution.xy;
+
+    st = fixedRatio(st);
 
     vec3 color = vec3(0.0);
 
