@@ -1,7 +1,7 @@
 // Author: Frad Lee
 // Titile: Composition with Noise - Mark Rothko
 
-// Version 1
+// Version 2
 
 #ifdef GL_ES
 precision mediump float;
@@ -43,17 +43,17 @@ mat2 rotate2d(float _angle){
 
 vec3 artboard(in float _posN, in float _offset, in float _dT, in float _dB, in float _dRL, in vec2 _st) {
     
-    float edgeNoiseXT = noise(_st.x * 200.0 + u_time + _offset),
-    	edgeNoiseXB = noise(_st.x * 200.0 + u_time + 2.0 * _offset),
-    	edgeNoiseYR = noise(_st.y * 200.0 + u_time + 3.0 * _offset),
-    	edgeNoiseYL = noise(_st.y * 200.0 + u_time + 4.0 * _offset);
+    float edgeNoiseXT = noise(_st.x * 200.0 + u_time * + _offset),
+    	edgeNoiseXB = noise(_st.x * 200.0 + u_time +  _offset),
+    	edgeNoiseYR = noise(_st.y * 200.0 + u_time +  _offset),
+    	edgeNoiseYL = noise(_st.y * 200.0 + u_time +  _offset);
     
     vec2 t = step(edgeNoiseXT * _posN + _dT, _st); // top
     vec2 b = step(edgeNoiseXB * _posN + _dB, 1.0 - _st); // bottom
     vec2 r = step(edgeNoiseYR * _posN + _dRL, _st); //right
     vec2 l = step(edgeNoiseYL * _posN + _dRL, 1.0 - _st); // left
 
-    return vec3(b.y * t.y * r.x * l.x);
+    return  vec3(b.y * t.y * r.x * l.x);
 }
 
 vec2 fixedRatio (in vec2 _st) {
@@ -107,33 +107,29 @@ void main(){
     
     st = fixedRatio(st);
     
-    // color = colorB;
-    float frep =  noise(u_time * 2.0) * (abs(sin(u_time)) * 0.5 ) * 0.02;
-    
-  	// color += colorB;
-    color += vec3(
-        artboard(0.02, 10.0, D_TB + H_P_2 + H_P_3, D_TB, D_LR , st )) * 
-        mix(vec3(
-            noise(st * 1000.0) * 
-            noise(st * (10000000.0 + abs(sin(u_time))))
-        	), colorP1, 1.124);
+    float frep =  noise(u_time * 20.0) * (abs(sin(u_time)) * 0.5 ) * 0.02;
     
     color += vec3(
-        artboard(0.02, 20.0, D_TB + H_P_3, D_TB + H_P_1, D_LR, st)) * 
+        artboard(0.02, 1.0, D_TB + H_P_2 + H_P_3, D_TB, D_LR , st)) * 
         mix(vec3(
-            noise(st*rotate2d(PI / 1.088) * 100.0) *
-            noise(st*rotate2d(PI / 0.328) * 10000000.0)
-        	), colorP2, 1.080);
+            noise(st * 10.0) * 
+            noise(st * 1000.0)
+        	), colorP1, 1.276 + frep);
     
     color += vec3(
-        artboard(0.02, 30.0, D_TB, D_TB + H_P_1 + H_P_2, D_LR, st)) * 
+        artboard(0.02, 2.0, D_TB + H_P_3, D_TB + H_P_1, D_LR, st)) * 
         mix(vec3(
-            noise(st * 1000000.0) * 
-        	noise(st*rotate2d(PI / 3.344) * 100.0) *
-            noise(st*rotate2d(PI / 4.008) * 10.0)
-        	), colorP3, 1.096);
+            noise(st*rotate2d(PI / 1.368) * 10.0) *
+            noise(st*rotate2d(PI / 0.312) * 10000.0)
+        	), colorP2, 1.208 + frep);
     
+    color += vec3(
+        artboard(0.02, 3.0, D_TB, D_TB + H_P_1 + H_P_2, D_LR, st)) * 
+        mix(vec3(
+            noise(st * 10000.0) * 
+        	noise(st*rotate2d(PI / 3.344) * 1000.0) *
+            noise(st*rotate2d(PI / 3.000) * 10.0)
+        	), colorP3, 0.840 + frep);
     
     gl_FragColor = vec4(color,1.0);
 }
-
