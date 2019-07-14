@@ -1,7 +1,9 @@
 // Author: Frad Lee
 // Title: Cellular Noise with Mouse Position
 
-// Most fork from "CellularNoise" by @patriciogv
+// Version 1
+
+// Most codes fork from "CellularNoise" by @patriciogv
 // https://thebookofshaders.com/12/
 
 #ifdef GL_ES
@@ -27,7 +29,7 @@ void main() {
     // Tile the space
     vec2 i_st = floor(st);
     vec2 f_st = fract(st);
-    
+
     float m_dist = 1.;  // minimun distance
 
     // Tile and scale the mouse point, Magic happen (1 of 3)
@@ -39,7 +41,7 @@ void main() {
 
     // Magic happen (2 of 3)
     for (int i = 0; i <= 0; i++) {
-        
+
         for (int y= -1; y <= 1; y++) {
             for (int x= -1; x <= 1; x++) {
                 // Neighbor place in the grid
@@ -59,15 +61,15 @@ void main() {
                 float dist = length(diff);
 
                 // Keep the closer distance
-                m_dist = min(m_dist, dist);                  
+                m_dist = min(m_dist, dist);
             }
         }
-        
+
         // Magic happen (3 of 3)
         float dist = distance(st, point[i]);
         m_dist = min(m_dist, dist);
     }
-    
+
     // Draw the min distance (distance field)
     color += m_dist;
 
