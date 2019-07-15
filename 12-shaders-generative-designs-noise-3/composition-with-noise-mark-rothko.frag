@@ -42,12 +42,12 @@ mat2 rotate2d(float _angle){
 }
 
 vec3 artboard(in float _posN, in float _offset, in float _dT, in float _dB, in float _dRL, in vec2 _st) {
-    
-    float edgeNoiseXT = noise(_st.x * 200.0 + u_time * + _offset),
+
+    float edgeNoiseXT = noise(_st.x * 200.0 + u_time + _offset),
     	edgeNoiseXB = noise(_st.x * 200.0 + u_time +  _offset),
     	edgeNoiseYR = noise(_st.y * 200.0 + u_time +  _offset),
     	edgeNoiseYL = noise(_st.y * 200.0 + u_time +  _offset);
-    
+
     vec2 t = step(edgeNoiseXT * _posN + _dT, _st); // top
     vec2 b = step(edgeNoiseXB * _posN + _dB, 1.0 - _st); // bottom
     vec2 r = step(edgeNoiseYR * _posN + _dRL, _st); //right
@@ -82,7 +82,7 @@ float random (in vec2 st) {
 float noise (in vec2 st) {
     vec2 i = floor(st);
     vec2 f = fract(st);
-    
+
     // Four corners in 2D of a tile
     float a = random(i);
     float b = random(i + vec2(1.0, 0.0));
@@ -104,32 +104,32 @@ float noise (in vec2 st) {
 void main(){
     vec2 st = gl_FragCoord.xy / u_resolution.xy;
     vec3 color = vec3(0.0);
-    
+
     st = fixedRatio(st);
-    
+
     float frep =  noise(u_time * 20.0) * (abs(sin(u_time)) * 0.5 ) * 0.02;
-    
+
     color += vec3(
-        artboard(0.02, 1.0, D_TB + H_P_2 + H_P_3, D_TB, D_LR , st)) * 
+        artboard(0.02, 1.0, D_TB + H_P_2 + H_P_3, D_TB, D_LR , st)) *
         mix(vec3(
-            noise(st * 10.0) * 
+            noise(st * 10.0) *
             noise(st * 1000.0)
         	), colorP1, 1.276 + frep);
-    
+
     color += vec3(
-        artboard(0.02, 2.0, D_TB + H_P_3, D_TB + H_P_1, D_LR, st)) * 
+        artboard(0.02, 2.0, D_TB + H_P_3, D_TB + H_P_1, D_LR, st)) *
         mix(vec3(
             noise(st*rotate2d(PI / 1.368) * 10.0) *
             noise(st*rotate2d(PI / 0.312) * 10000.0)
         	), colorP2, 1.208 + frep);
-    
+
     color += vec3(
-        artboard(0.02, 3.0, D_TB, D_TB + H_P_1 + H_P_2, D_LR, st)) * 
+        artboard(0.02, 3.0, D_TB, D_TB + H_P_1 + H_P_2, D_LR, st)) *
         mix(vec3(
-            noise(st * 10000.0) * 
+            noise(st * 10000.0) *
         	noise(st*rotate2d(PI / 3.344) * 1000.0) *
             noise(st*rotate2d(PI / 3.000) * 10.0)
         	), colorP3, 0.840 + frep);
-    
+
     gl_FragColor = vec4(color,1.0);
 }
