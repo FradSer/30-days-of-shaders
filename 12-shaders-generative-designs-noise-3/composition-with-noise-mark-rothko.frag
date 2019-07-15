@@ -112,14 +112,14 @@ void main(){
     color += vec3(
         artboard(0.02, 1.0, D_TB + H_P_2 + H_P_3, D_TB, D_LR , st)) *
         mix(vec3(
-            noise(st * 10.0) *
+            noise((st + (vec2(u_time) * 0.1 + frep)) * 10.0) *
             noise(st * 1000.0)
         	), colorP1, 1.276 + frep);
 
     color += vec3(
         artboard(0.02, 2.0, D_TB + H_P_3, D_TB + H_P_1, D_LR, st)) *
         mix(vec3(
-            noise(st*rotate2d(PI / 1.368) * 10.0) *
+            noise((st - (vec2(u_time) * 0.1 + frep)) * rotate2d(PI / 1.368) * 10.0) *
             noise(st*rotate2d(PI / 0.312) * 10000.0)
         	), colorP2, 1.208 + frep);
 
@@ -128,7 +128,7 @@ void main(){
         mix(vec3(
             noise(st * 10000.0) *
         	noise(st*rotate2d(PI / 3.344) * 1000.0) *
-            noise(st*rotate2d(PI / 3.000) * 10.0)
+            noise((st + (vec2(u_time) * 0.1 + frep)) * rotate2d(PI / 3.000) * 10.0)
         	), colorP3, 0.840 + frep);
 
     gl_FragColor = vec4(color,1.0);
