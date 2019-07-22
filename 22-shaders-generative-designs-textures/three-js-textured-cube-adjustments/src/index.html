@@ -1,0 +1,1 @@
+<canvas id="c"></canvas>
