@@ -1,4 +1,4 @@
-# 30 Days of GLSL
+# 30 Days of Shaders
 
 ## Authors
 
